@@ -10,6 +10,16 @@ import requests
 page_copy: ft.Page = None
 
 
+def buttom_regression(page: ft.Page, controls_remove: list[ft.Control], func) -> None:
+
+    for control in controls_remove:
+        page.remove(control)
+
+    page.update()
+
+    func(page)
+
+
 def view_general(page: ft.Page) -> None:
 
     # row = ft.row()
@@ -82,6 +92,13 @@ def view_general(page: ft.Page) -> None:
 
         row_butom = ft.Row([buttom_regret, buttom_next])
 
+        def on_click(e):
+            buttom_regression(
+                page, [text_1, text_2, text_3, text_4, text_5, row_butom, regret], view_general)
+
+        regret = ft.ElevatedButton(
+            text="Regresar a la anterior vista", on_click=on_click)
+
         page.add(text_1)
         page.add(text_2)
         page.add(text_3)
@@ -89,8 +106,17 @@ def view_general(page: ft.Page) -> None:
         page.add(text_5)
 
         page.add(row_butom)
+        page.add(regret)
 
         page.update()
+
+    # fin de wacth seller
+
+    def view_create_seller(page: ft.Page):
+        # seller1 = Seller.objects.create(name="Juan Pérez", identifier="123456")
+        # seller_login1 = SellerLogin.objects.create(
+        # identifier=seller1, username="juan_vendedor", password="securepass")
+        print("ff")
 
     buttom_watch_seller = ft.Container(content=ft.Text("Ver vendedores"), margin=10,
                                        padding=10,
