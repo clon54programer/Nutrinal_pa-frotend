@@ -359,6 +359,27 @@ def view_general(page: ft.Page) -> None:
         # "price": "122.00",
         # "description": "Jan"
 
+    def view_watch_orders(e):
+        page.remove(row)
+        page.remove(row_2)
+        page.remove(row_3)
+        page.remove(buttom_watch_orders)
+
+        r = requests.get(
+            "http://127.0.0.1:8000/nutrinal_pa/admin/get_orders")
+
+        json = r.json()
+
+        data = json.get("data", {})
+
+        items: dict = dict(data.items())
+        index: int = 0
+
+        name = items[f"product_{index}"]["name"]
+        code = items[f"product_{index}"]["code"]
+        price = items[f"product_{index}"]["price"]
+        description = items[f"product_{index}"]["description"]
+
     buttom_watch_seller = ft.Container(content=ft.Text("Ver vendedores"), margin=10,
                                        padding=10,
                                        alignment=ft.alignment.center,
