@@ -200,17 +200,46 @@ def view_general(page: ft.Page) -> None:
 
         text_price = ft.Text("El precio del producto")
         text_precio_product = ft.TextField(
-            label="Ingrese el precio del producto")
+            label="Ingrese el precio del producto", keyboard_type=ft.KeyboardType.NUMBER)
 
         text_description = ft.Text("Descripcion del producto")
         text_description_product = ft.TextField(
             label="Ingrese la decripcion del producto")
 
-        # buttom_send_seller = ft.ElevatedButton(
-        #    "Enviar informacion", on_click=on_click_send_info)
+        text_info = ft.Text("No error")
+
+        def on_click_send_info(e):
+            try:
+                price = int(text_precio_product.value)
+
+                value_list = [text_name_product.value,
+                              text_code_product.value, text_description_product.value, text_precio_product.value]
+
+                for value in value_list:
+                    if not value.strip():
+                        text_info.value = "[ERROR] Hay un campo que esta vacio"
+                        page.update()
+                        return
+
+                json = {"data": {
+                        "name": text_name_product.value,
+                        "code": text_code_product.value,
+                        "price": price,
+                        "description": text_description_product.value
+                        }}
+
+                r = requests.post(
+                    "http://127.0.0.1:8000/nutrinal_pa/admin/make_product", json=json)
+            except (TypeError, ValueError):
+
+                text_info.value = "El campo de precio tieen caracters que no son numeros"
+                page.update()
+
+        buttom_send_seller = ft.ElevatedButton(
+            "Enviar informacion", on_click=on_click_send_info)
 
         col = ft.Column(controls=[text_name, text_name_product, text_code,
-                        text_code_product, text_price, text_precio_product, text_description, text_description_product])
+                        text_code_product, text_price, text_precio_product, text_description, text_description_product, text_info, buttom_send_seller])
 
         page.add(row_text_main)
         page.add(col)
