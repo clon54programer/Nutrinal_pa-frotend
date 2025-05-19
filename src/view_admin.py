@@ -1,10 +1,13 @@
 import flet as ft
+import requests
 
 # Funciones
 # crear vendedores
 # ver vendedores
 # crear productos y produciones
 # ver los pedidos
+
+page_copy: ft.Page = None
 
 
 def view_general(page: ft.Page) -> None:
@@ -13,13 +16,49 @@ def view_general(page: ft.Page) -> None:
     text = ft.Text("Panel de administrador",
                    color=ft.Colors.BLACK, text_align=ft.TextAlign.CENTER, size=40, style=ft.TextAlign.CENTER)
 
+    def view_watch_seller(e) -> None:
+        page.remove(row)
+        page.remove(row_2)
+        page.remove(row_3)
+        page.remove(buttom_watch_orders)
+
+        page.update()
+        url = "http://127.0.0.1:8000/nutrinal_pa/admin/get_seller"
+
+        r = requests.get(url=url)
+
+        json = r.json()
+
+        data = json.get("data", {})
+
+        for key, seller in data.items():  # Iterar sobre las claves y valores
+            text_1 = ft.Text(f"Vendedor: {key}")
+
+            name = seller.get("name")
+            text_2 = ft.Text(f"Nombre: {name}")
+
+            identifier = seller.get("identifier")
+            text_3 = ft.Text(f"Identificador: {identifier}")
+
+            data_joined = seller.get("data_joined")
+            text_4 = ft.Text(f"Fecha de ingreso: {data_joined}")
+            text_5 = ft.Text("-" * 30)
+
+        page.add(text_1)
+        page.add(text_2)
+        page.add(text_3)
+        page.add(text_4)
+        page.add(text_5)
+
+        page.update()
+
     buttom_watch_seller = ft.Container(content=ft.Text("Ver vendedores"), margin=10,
                                        padding=10,
                                        alignment=ft.alignment.center,
                                        bgcolor=ft.Colors.AMBER,
                                        width=150,
                                        height=150,
-                                       border_radius=10)
+                                       border_radius=10, on_click=view_watch_seller)
 
     buttom_create_seller = ft.Container(
         content=ft.Text("Crear vendedores"), margin=10,
