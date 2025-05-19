@@ -174,6 +174,51 @@ def view_general(page: ft.Page) -> None:
         page.add(col)
         page.add(regret)
 
+    def view_create_product_and_productions(e):
+        # Crear un producto
+        # product = Product.objects.create(name="Suplemento Nutricional", code="PROD001",
+        #                             price=49.99, description="Mejora la salud y el bienestar.")
+        # Crear una producción para el producto
+        # production = Production.objects.create(product=product, cant_available=100)
+        page.remove(row)
+        page.remove(row_2)
+        page.remove(row_3)
+        page.remove(buttom_watch_orders)
+
+        text_main = ft.Text("Crear un nuevo producto", color=ft.Colors.BLACK,
+                            text_align=ft.TextAlign.CENTER, size=40, style=ft.TextAlign.CENTER)
+        row_text_main = ft.Row(
+            controls=[text_main], alignment=ft.MainAxisAlignment.CENTER)
+
+        text_name = ft.Text("Nombre del producto")
+        text_name_product = ft.TextField("Ingrese el nombre del producto")
+
+        text_code = ft.Text("Codigo del producto")
+        text_code_product = ft.TextField("Ingrese el codigo del producto")
+
+        text_price = ft.Text("El precio del producto")
+        text_precio_product = ft.TextField("Ingrese el precio del producto")
+
+        text_price = ft.Text("Descripcion del producto")
+        text_precio_product = ft.TextField(
+            "Ingrese la decripcion del producto")
+
+        # buttom_send_seller = ft.ElevatedButton(
+        #    "Enviar informacion", on_click=on_click_send_info)
+
+        col = ft.Column(controls=[text_name, text_name_product, text_code,
+                        text_code_product, text_price, text_precio_product])
+
+        page.add(row_text_main)
+        page.add(col)
+
+        # content = {"data": {
+        #    "name": "Producto Ejemplo",
+        #    "code": "P12345",
+        #    "price": 1000.50,
+        #    "description": "Este es un producto de prueba"
+        # }}
+
     buttom_watch_seller = ft.Container(content=ft.Text("Ver vendedores"), margin=10,
                                        padding=10,
                                        alignment=ft.alignment.center,
@@ -198,7 +243,7 @@ def view_general(page: ft.Page) -> None:
         bgcolor=ft.Colors.ORANGE,
         width=150,
         height=150,
-        border_radius=10)
+        border_radius=10,  on_click=view_create_product_and_productions)
 
     buttom_watch_production = ft.Container(
         content=ft.Text("Ver productos"), margin=10,
