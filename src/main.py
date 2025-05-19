@@ -28,7 +28,7 @@ def main(page: ft.Page):
 
     def send_info(e) -> None:
 
-        if username_field.value is None or password_field.value is None:
+        if username_field.value != None or password_field.value != None:
             print("Un campo esta vacio")
         else:
             print("user: ", username_field.value)
