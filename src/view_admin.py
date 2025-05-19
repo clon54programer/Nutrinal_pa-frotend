@@ -152,16 +152,11 @@ def view_general(page: ft.Page) -> None:
 
             if r.status_code != 200:
                 error = r.json()["data"]["details"]
-                error_dialog = ft.text(
-                    f"Hubo un error al mandar la informacion. {error}")
-                page.add(error_dialog)
+                print(
+                    f"Hubo un error al mandar la informacion. Detalles {error}")
+
             else:
-                success_dialog = ft.Text(
-                    "La informacion fue mandada exitosamente")
-
-                page.add(success_dialog)
-
-            page.update()
+                print("La informacion fue mandada exitosamente")
 
         buttom_send_seller = ft.ElevatedButton(
             "Enviar informacion", on_click=on_click_send_info)
