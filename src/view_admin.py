@@ -31,24 +31,50 @@ def view_general(page: ft.Page) -> None:
 
         data = json.get("data", {})
 
-        for key, seller in data.items():  # Iterar sobre las claves y valores
-            text_1 = ft.Text(f"Vendedor: {key}")
+        items: dict = dict(data.items())
+        index: int = 0
 
-            name = seller.get("name")
-            text_2 = ft.Text(f"Nombre: {name}")
+        text_1 = ft.Text(f"Vendedor {index}")
 
-            identifier = seller.get("identifier")
-            text_3 = ft.Text(f"Identificador: {identifier}")
+        name = items[f"seller_{index}"]["name"]
+        text_2 = ft.Text(f"Nombre: {name}")
 
-            data_joined = seller.get("data_joined")
-            text_4 = ft.Text(f"Fecha de ingreso: {data_joined}")
-            text_5 = ft.Text("-" * 30)
+        identifier = items[f"seller_{index}"]["identifier"]
+        text_3 = ft.Text(f"Identificador: {identifier}")
+
+        data_joined = items[f"seller_{index}"]["data_joined"]
+        text_4 = ft.Text(f"Fecha de ingreso: {data_joined}")
+        text_5 = ft.Text("-" * 30)
+
+        def on_regret(e):
+            nonlocal index
+            if index != 0:
+                index -= 1
+            else:
+                buttom_regret.disabled = True
+            page.update()
+
+        def on_next(e):
+            nonlocal index
+            if index < len(items):
+                index += 1
+                page.update()
+            else:
+                buttom_next.disabled = True
+            page.update()
+
+        buttom_regret = ft.ElevatedButton(text="Regresar", on_click=on_regret)
+        buttom_next = ft.ElevatedButton(text="Siguiente", on_click=on_next)
+
+        row_butom = ft.Row([buttom_next, buttom_regret])
 
         page.add(text_1)
         page.add(text_2)
         page.add(text_3)
         page.add(text_4)
         page.add(text_5)
+
+        page.add(row_butom)
 
         page.update()
 
