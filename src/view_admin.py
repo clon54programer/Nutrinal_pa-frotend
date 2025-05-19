@@ -338,17 +338,17 @@ def view_general(page: ft.Page) -> None:
 
         row_butom = ft.Row([buttom_regret, buttom_next])
 
+        col = ft.Column(controls=[text_index, text_name,
+                        text_code, text_price, text_description])
+
         def on_click(e):
             buttom_regression(
-                page, [text_index, text_name, text_code, text_price, text_description, row_butom, regret], view_general)
+                page, [col, row_butom, regret], view_general)
 
         regret = ft.ElevatedButton(
             text="Regresar a la anterior vista", on_click=on_click)
 
-        page.add(text_index)
-        page.add(text_name)
-        page.add(text_code)
-        page.add(text_description)
+        page.add(col)
 
         page.add(row_butom)
         page.add(regret)
