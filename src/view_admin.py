@@ -191,23 +191,26 @@ def view_general(page: ft.Page) -> None:
             controls=[text_main], alignment=ft.MainAxisAlignment.CENTER)
 
         text_name = ft.Text("Nombre del producto")
-        text_name_product = ft.TextField("Ingrese el nombre del producto")
+        text_name_product = ft.TextField(
+            label="Ingrese el nombre del producto")
 
         text_code = ft.Text("Codigo del producto")
-        text_code_product = ft.TextField("Ingrese el codigo del producto")
+        text_code_product = ft.TextField(
+            label="Ingrese el codigo del producto")
 
         text_price = ft.Text("El precio del producto")
-        text_precio_product = ft.TextField("Ingrese el precio del producto")
-
-        text_price = ft.Text("Descripcion del producto")
         text_precio_product = ft.TextField(
-            "Ingrese la decripcion del producto")
+            label="Ingrese el precio del producto")
+
+        text_description = ft.Text("Descripcion del producto")
+        text_description_product = ft.TextField(
+            label="Ingrese la decripcion del producto")
 
         # buttom_send_seller = ft.ElevatedButton(
         #    "Enviar informacion", on_click=on_click_send_info)
 
         col = ft.Column(controls=[text_name, text_name_product, text_code,
-                        text_code_product, text_price, text_precio_product])
+                        text_code_product, text_price, text_precio_product, text_description, text_description_product])
 
         page.add(row_text_main)
         page.add(col)
