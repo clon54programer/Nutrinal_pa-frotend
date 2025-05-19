@@ -50,15 +50,33 @@ def view_general(page: ft.Page) -> None:
             nonlocal index
             if index != 0:
                 index -= 1
+                name = items[f"seller_{index}"]["name"]
+                identifier = items[f"seller_{index}"]["identifier"]
+                identifier = items[f"seller_{index}"]["identifier"]
+
+                text_1.value = f"Vendedor {index}"
+                text_2.value = f"Nombre: {name}"
+                text_3.value = f"Identificador: {identifier}"
+                text_4.value = f"Fecha de ingreso: {data_joined}"
+
             else:
                 buttom_regret.disabled = True
             page.update()
 
         def on_next(e):
             nonlocal index
-            if index < len(items):
+            if index <= len(items) - 1:
                 index += 1
-                page.update()
+
+                name = items[f"seller_{index}"]["name"]
+                identifier = items[f"seller_{index}"]["identifier"]
+                identifier = items[f"seller_{index}"]["identifier"]
+
+                text_1.value = f"Vendedor {index}"
+                text_2.value = f"Nombre: {name}"
+                text_3.value = f"Identificador: {identifier}"
+                text_4.value = f"Fecha de ingreso: {data_joined}"
+
             else:
                 buttom_next.disabled = True
             page.update()
@@ -66,7 +84,7 @@ def view_general(page: ft.Page) -> None:
         buttom_regret = ft.ElevatedButton(text="Regresar", on_click=on_regret)
         buttom_next = ft.ElevatedButton(text="Siguiente", on_click=on_next)
 
-        row_butom = ft.Row([buttom_next, buttom_regret])
+        row_butom = ft.Row([buttom_regret, buttom_next])
 
         page.add(text_1)
         page.add(text_2)
