@@ -28,12 +28,30 @@ def main(page: ft.Page):
 
     def send_info(e) -> None:
 
-        if username_field.value != None or password_field.value != None:
-            print("Un campo esta vacio")
-        else:
+        if username_field.value != None and password_field.value != None:
+
             print("user: ", username_field.value)
             print("password: ", password_field.value)
             print("Tipo de usuario: ", list_type_user.value)
+
+            page.remove(text_user)
+            page.remove(username_field)
+
+            page.remove(text_password)
+            page.remove(password_field)
+
+            page.remove(text_list)
+            page.remove(list_type_user)
+
+            page.remove(send_buttom)
+
+            text = ft.TextField("Se envio la informacion")
+
+            page.add(text)
+            page.update()
+
+        else:
+            print("Un campo esta vacio")
 
     send_buttom = ft.ElevatedButton(text="Enviar", on_click=send_info)
 
