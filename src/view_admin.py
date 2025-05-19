@@ -270,6 +270,85 @@ def view_general(page: ft.Page) -> None:
         #    "description": "Este es un producto de prueba"
         # }}
 
+    def view_watch_production():
+        page.remove(row)
+        page.remove(row_2)
+        page.remove(row_3)
+        page.remove(buttom_watch_orders)
+
+        json = requests.get(
+            "http://127.0.0.1:8000/nutrinal_pa/admin/get_product")
+
+        data = json.get("data", {})
+
+        items: dict = dict(data.items())
+        index: int = 0
+
+        name = items[f"product_{index}"]["name"]
+        code = items[f"product_{index}"]["code"]
+        price = items[f"product_{index}"]["price"]
+        description = items[f"product_{index}"]["description"]
+
+        text_index = ft.Text(f"Producto {index}")
+        text_name = ft.Text(f"Name: {name}")
+        text_code = ft.Text(f"Codigo: {code}")
+        text_price = ft.Text(f"Precio: {price}")
+        text_description = ft.Text(f"descripcion: {description}")
+        # text_cant = ft.Text(f"Cantidad: {cant}")
+
+        def on_regret(e):
+            nonlocal index
+            if index != 0:
+                index -= 1
+                name = items[f"product_{index}"]["name"]
+                code = items[f"product_{index}"]["code"]
+                price = items[f"product_{index}"]["price"]
+                description = items[f"product_{index}"]["description"]
+
+                text_index.value = f"Producto {index}"
+                text_name.value = f"Name: {name}"
+                text_code.value = f"Codigo: {code}"
+                text_price.value = f"Precio: {price}"
+                text_description.value = f"descripcion: {description}"
+
+            page.update()
+
+        def on_next(e):
+            nonlocal index
+            if index <= len(items) - 1:
+                index += 1
+
+                name = items[f"product_{index}"]["name"]
+                code = items[f"product_{index}"]["code"]
+                price = items[f"product_{index}"]["price"]
+                description = items[f"product_{index}"]["description"]
+
+                text_index.value = f"Producto {index}"
+                text_name.value = f"Name: {name}"
+                text_code.value = f"Codigo: {code}"
+                text_price.value = f"Precio: {price}"
+                text_description.value = f"descripcion: {description}"
+
+            page.update()
+
+        buttom_regret = ft.ElevatedButton(text="Regresar", on_click=on_regret)
+        buttom_next = ft.ElevatedButton(text="Siguiente", on_click=on_next)
+
+        row_butom = ft.Row([buttom_regret, buttom_next])
+
+        def on_click(e):
+            buttom_regression(
+                page, [text_1, text_2, text_3, text_4, text_5, row_butom, regret], view_general)
+
+        regret = ft.ElevatedButton(
+            text="Regresar a la anterior vista", on_click=on_click)
+
+        # product_1": {
+        # "name": "p",
+        # "code": "123",
+        # "price": "122.00",
+        # "description": "Jan"
+
     buttom_watch_seller = ft.Container(content=ft.Text("Ver vendedores"), margin=10,
                                        padding=10,
                                        alignment=ft.alignment.center,
