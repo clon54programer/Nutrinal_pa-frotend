@@ -112,11 +112,35 @@ def view_general(page: ft.Page) -> None:
 
     # fin de wacth seller
 
-    def view_create_seller(page: ft.Page):
+    def view_create_seller(e):
         # seller1 = Seller.objects.create(name="Juan Pérez", identifier="123456")
         # seller_login1 = SellerLogin.objects.create(
         # identifier=seller1, username="juan_vendedor", password="securepass")
-        print("ff")
+        page.remove(row)
+        page.remove(row_2)
+        page.remove(row_3)
+        page.remove(buttom_watch_orders)
+
+        text_main = ft.Text("Crear un nuevo vendedor")
+
+        row_text_main = ft.Row(
+            controls=[text_main], alignment=ft.MainAxisAlignment.CENTER)
+
+        text_name = ft.Text("Nombre")
+        text_name_seller = ft.TextField(label="ingrese un nombre")
+
+        text_identifier = ft.Text("Identidicacion")
+        text_identifier_seller = ft.TextField(
+            label="ingrese la identificacion")
+
+        text_username = ft.Text("Usuario y constraseña")
+        text_username_seller = ft.TextField(label="Ingrese el usuario")
+        text_password_seller = ft.TextField(label="Ingrese la contraseña")
+
+        col = ft.Column(controls=[text_name, text_name_seller, text_identifier,
+                        text_identifier_seller, text_username, text_username_seller, text_password_seller])
+        page.add(row_text_main)
+        page.add(col)
 
     buttom_watch_seller = ft.Container(content=ft.Text("Ver vendedores"), margin=10,
                                        padding=10,
