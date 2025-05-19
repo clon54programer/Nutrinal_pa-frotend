@@ -45,10 +45,10 @@ def main(page: ft.Page):
 
             page.remove(send_buttom)
 
-            text = ft.TextField("Se envio la informacion")
+            # text = ft.TextField("Se envio la informacion")
 
-            page.add(text)
-            page.update()
+            # page.add(text)
+            # page.update()
 
         else:
             print("Un campo esta vacio")
