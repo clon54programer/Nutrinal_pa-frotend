@@ -230,6 +230,17 @@ def view_general(page: ft.Page) -> None:
 
                 r = requests.post(
                     "http://127.0.0.1:8000/nutrinal_pa/admin/make_product", json=json)
+
+                if r.status_code != 200:
+
+                    details = r.json()['data']['details']
+
+                    text_info.value = f"[Error] {details}"
+                else:
+                    text_info.value = "La informacion ha sido mandada exitosamente"
+
+                page.update()
+
             except (TypeError, ValueError):
 
                 text_info.value = "El campo de precio tieen caracters que no son numeros"
