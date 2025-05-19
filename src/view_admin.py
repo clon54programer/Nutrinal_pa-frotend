@@ -121,7 +121,8 @@ def view_general(page: ft.Page) -> None:
         page.remove(row_3)
         page.remove(buttom_watch_orders)
 
-        text_main = ft.Text("Crear un nuevo vendedor")
+        text_main = ft.Text("Crear un nuevo vendedor", color=ft.Colors.BLACK,
+                            text_align=ft.TextAlign.CENTER, size=40, style=ft.TextAlign.CENTER)
 
         row_text_main = ft.Row(
             controls=[text_main], alignment=ft.MainAxisAlignment.CENTER)
@@ -129,7 +130,7 @@ def view_general(page: ft.Page) -> None:
         text_name = ft.Text("Nombre")
         text_name_seller = ft.TextField(label="ingrese un nombre")
 
-        text_identifier = ft.Text("Identidicacion")
+        text_identifier = ft.Text("Identificacion")
         text_identifier_seller = ft.TextField(
             label="ingrese la identificacion")
 
@@ -137,8 +138,36 @@ def view_general(page: ft.Page) -> None:
         text_username_seller = ft.TextField(label="Ingrese el usuario")
         text_password_seller = ft.TextField(label="Ingrese la contraseña")
 
+        def on_click_send_info(e):
+
+            data = {"data": {
+                "name": text_name_seller.value,
+                "id": text_identifier_seller.value,
+                "username": text_username_seller.value,
+                "password": text_password_seller.value,
+            }}
+
+            r = requests.post(
+                url="http://127.0.0.1:8000/nutrinal_pa/admin/create_seller_login", json=data)
+
+            if r.status_code != 200:
+                error = r.json()["data"]["details"]
+                error_dialog = ft.text(
+                    f"Hubo un error al mandar la informacion. {error}")
+                page.add(error_dialog)
+            else:
+                success_dialog = ft.Text(
+                    "La informacion fue mandada exitosamente")
+
+                page.add(success_dialog)
+
+            page.update()
+
+        buttom_send_seller = ft.ElevatedButton(
+            "Enviar informacion", on_click=on_click_send_info)
+
         col = ft.Column(controls=[text_name, text_name_seller, text_identifier,
-                        text_identifier_seller, text_username, text_username_seller, text_password_seller])
+                        text_identifier_seller, text_username, text_username_seller, text_password_seller, buttom_send_seller])
         page.add(row_text_main)
         page.add(col)
 
@@ -157,7 +186,7 @@ def view_general(page: ft.Page) -> None:
         bgcolor=ft.Colors.BLUE,
         width=150,
         height=150,
-        border_radius=10)
+        border_radius=10, on_click=view_create_seller)
 
     buttom_create_production = ft.Container(
         content=ft.Text("Crear producto"), margin=10,
