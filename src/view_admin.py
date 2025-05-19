@@ -270,14 +270,16 @@ def view_general(page: ft.Page) -> None:
         #    "description": "Este es un producto de prueba"
         # }}
 
-    def view_watch_production():
+    def view_watch_production(e):
         page.remove(row)
         page.remove(row_2)
         page.remove(row_3)
         page.remove(buttom_watch_orders)
 
-        json = requests.get(
+        r = requests.get(
             "http://127.0.0.1:8000/nutrinal_pa/admin/get_product")
+
+        json = r.json()
 
         data = json.get("data", {})
 
@@ -338,10 +340,18 @@ def view_general(page: ft.Page) -> None:
 
         def on_click(e):
             buttom_regression(
-                page, [text_1, text_2, text_3, text_4, text_5, row_butom, regret], view_general)
+                page, [text_index, text_name, text_code, text_price, text_description, row_butom, regret], view_general)
 
         regret = ft.ElevatedButton(
             text="Regresar a la anterior vista", on_click=on_click)
+
+        page.add(text_index)
+        page.add(text_name)
+        page.add(text_code)
+        page.add(text_description)
+
+        page.add(row_butom)
+        page.add(regret)
 
         # product_1": {
         # "name": "p",
@@ -382,7 +392,7 @@ def view_general(page: ft.Page) -> None:
         bgcolor=ft.Colors.ORANGE_700,
         width=150,
         height=150,
-        border_radius=10)
+        border_radius=10, on_click=view_watch_production)
 
     buttom_watch_orders = ft.Container(content=ft.Text("Ver pedidos"), margin=10,
                                        padding=10,
