@@ -161,10 +161,18 @@ def view_general(page: ft.Page) -> None:
         buttom_send_seller = ft.ElevatedButton(
             "Enviar informacion", on_click=on_click_send_info)
 
+        def on_click(e):
+            buttom_regression(
+                page, [col, row_text_main, regret], view_general)
+
+        regret = ft.ElevatedButton(
+            text="Regresar a la anterior vista", on_click=on_click)
+
         col = ft.Column(controls=[text_name, text_name_seller, text_identifier,
                         text_identifier_seller, text_username, text_username_seller, text_password_seller, buttom_send_seller])
         page.add(row_text_main)
         page.add(col)
+        page.add(regret)
 
     buttom_watch_seller = ft.Container(content=ft.Text("Ver vendedores"), margin=10,
                                        padding=10,
