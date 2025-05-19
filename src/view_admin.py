@@ -252,8 +252,16 @@ def view_general(page: ft.Page) -> None:
         col = ft.Column(controls=[text_name, text_name_product, text_code,
                         text_code_product, text_price, text_precio_product, text_description, text_description_product, text_info, buttom_send_seller])
 
+        def on_click(e):
+            buttom_regression(
+                page, [col, row_text_main, regret], view_general)
+
+        regret = ft.ElevatedButton(
+            text="Regresar a la anterior vista", on_click=on_click)
+
         page.add(row_text_main)
         page.add(col)
+        page.add(regret)
 
         # content = {"data": {
         #    "name": "Producto Ejemplo",
