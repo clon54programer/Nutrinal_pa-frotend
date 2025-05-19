@@ -59,8 +59,6 @@ def view_general(page: ft.Page) -> None:
                 text_3.value = f"Identificador: {identifier}"
                 text_4.value = f"Fecha de ingreso: {data_joined}"
 
-            else:
-                buttom_regret.disabled = True
             page.update()
 
         def on_next(e):
@@ -77,8 +75,6 @@ def view_general(page: ft.Page) -> None:
                 text_3.value = f"Identificador: {identifier}"
                 text_4.value = f"Fecha de ingreso: {data_joined}"
 
-            else:
-                buttom_next.disabled = True
             page.update()
 
         buttom_regret = ft.ElevatedButton(text="Regresar", on_click=on_regret)
