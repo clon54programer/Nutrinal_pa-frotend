@@ -291,11 +291,17 @@ def view_general(page: ft.Page) -> None:
         price = items[f"product_{index}"]["price"]
         description = items[f"product_{index}"]["description"]
 
+        json_code = {"code": code}
+        r_2 = requests.post(
+            "http://127.0.0.1:8000/nutrinal_pa/admin/get_cant_product", json=json_code)
+        cant_avaible = r_2['data']['cant_product']
+
         text_index = ft.Text(f"Producto {index}")
         text_name = ft.Text(f"Name: {name}")
         text_code = ft.Text(f"Codigo: {code}")
         text_price = ft.Text(f"Precio: {price}")
-        text_description = ft.Text(f"descripcion: {description}")
+        text_description = ft.Text(f"Descripcion: {description}")
+        text_cant_avaible = ft.Text(f"Cantidad disponible: {cant_avaible}")
         # text_cant = ft.Text(f"Cantidad: {cant}")
 
         def on_regret(e):
@@ -307,11 +313,17 @@ def view_general(page: ft.Page) -> None:
                 price = items[f"product_{index}"]["price"]
                 description = items[f"product_{index}"]["description"]
 
+                json_code = {"code": code}
+                r_2 = requests.post(
+                    "http://127.0.0.1:8000/nutrinal_pa/admin/get_cant_product", json=json_code)
+                cant_avaible = r_2['data']['cant_product']
+
                 text_index.value = f"Producto {index}"
                 text_name.value = f"Name: {name}"
                 text_code.value = f"Codigo: {code}"
                 text_price.value = f"Precio: {price}"
                 text_description.value = f"descripcion: {description}"
+                text_cant_avaible.value = f"Cantidad disponible: {cant_avaible}"
 
             page.update()
 
@@ -325,11 +337,17 @@ def view_general(page: ft.Page) -> None:
                 price = items[f"product_{index}"]["price"]
                 description = items[f"product_{index}"]["description"]
 
+                json_code = {"code": code}
+                r_2 = requests.post(
+                    "http://127.0.0.1:8000/nutrinal_pa/admin/get_cant_product", json=json_code)
+                cant_avaible = r_2['data']['cant_product']
+
                 text_index.value = f"Producto {index}"
                 text_name.value = f"Name: {name}"
                 text_code.value = f"Codigo: {code}"
                 text_price.value = f"Precio: {price}"
                 text_description.value = f"descripcion: {description}"
+                text_cant_avaible = f"Cantidad disponible: {cant_avaible}"
 
             page.update()
 
@@ -339,7 +357,7 @@ def view_general(page: ft.Page) -> None:
         row_butom = ft.Row([buttom_regret, buttom_next])
 
         col = ft.Column(controls=[text_index, text_name,
-                        text_code, text_price, text_description])
+                        text_code, text_price, text_description, text_cant_avaible])
 
         def on_click(e):
             buttom_regression(
