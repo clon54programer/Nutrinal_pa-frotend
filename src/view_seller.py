@@ -162,11 +162,22 @@ def view_general_seller(page: ft.Page):
         height=150,
         border_radius=10, on_click=view_watch_order)
 
+    buttom_create_client = ft.Container(
+        content=ft.Text("Registrar cliente"), margin=10,
+        padding=10,
+        alignment=ft.alignment.center,
+        bgcolor=ft.Colors.GREEN,
+        width=150,
+        height=150,
+        border_radius=10)
+
     row_buttom = ft.Row([buttom_create_order, buttom_watch_order])
+    row_client = ft.Row([buttom_create_client])
 
     row_3 = ft.Row([text], alignment=ft.MainAxisAlignment.CENTER)
 
     page.add(row_3)
     page.add(row_buttom)
+    page.add(buttom_create_client)
 
     page.update()
