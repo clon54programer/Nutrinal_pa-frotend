@@ -145,6 +145,59 @@ def view_general_seller(page: ft.Page):
 
         page.update()
 
+    def view_create_client(e):
+
+        page.remove(row_buttom)
+        page.remove(row_3)
+
+        text = ft.Text("Crear Cliente",
+                       color=ft.Colors.BLACK, text_align=ft.TextAlign.CENTER, size=40, style=ft.TextAlign.CENTER)
+
+        text_name = ft.Text("Nombre")
+        text_name_seller = ft.TextField(label="Ingrese el nombre del cliente")
+
+        text_email = ft.Text("Email")
+        text_email_seller = ft.TextField(label="Ingrese el Email del cliente")
+
+        text_phone = ft.Text("Numero de telefono")
+        text_phone_seller = ft.TextField(
+            label="Ingrese el numero de telefono del cliente")
+
+        text_id = ft.Text("Identificaccion")
+        text_id_seller = ft.TextField(label="Ingrese el id del cliente")
+
+        col = ft.Column(controls=[text_name, text_name_seller, text_email,
+                        text_email_seller, text_phone, text_phone_seller, text_id, text_id_seller])
+
+        text_info = ft.Text("No hay errores")
+
+        def on_click_send_info(e):
+
+            json = {
+                "data": {
+                    "name": text_name_seller.value,
+                    "email": text_email_seller.value,
+                    "phone_number": text_phone_seller.value,
+                    "identifier": text_id_seller.value
+                }
+            }
+
+            r = requests.post(
+                "http://127.0.0.1:8000/nutrinal_pa/create_client", json=json)
+
+            if r.status_code != 200:
+                json = r.json()['data']['details']
+                text_info.value = f"[ERROR] {json}"
+            else:
+                text_info.value = "La informacion se mando de forma correcta."
+
+        butoo_send = ft.ElevatedButton(
+            "Enviar informacion", on_click=on_click_send_info)
+
+        page.add(col)
+        page.add(text_info)
+        page.add(butoo_send)
+
     buttom_create_order = ft.Container(content=ft.Text("Hacer un pedido"), margin=10,
                                        padding=10,
                                        alignment=ft.alignment.center,
@@ -169,7 +222,7 @@ def view_general_seller(page: ft.Page):
         bgcolor=ft.Colors.GREEN,
         width=150,
         height=150,
-        border_radius=10)
+        border_radius=10, on_click=view_create_client)
 
     row_buttom = ft.Row([buttom_create_order, buttom_watch_order])
     row_client = ft.Row([buttom_create_client])
