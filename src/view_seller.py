@@ -144,6 +144,8 @@ def view_general_seller(page: ft.Page):
 
         row_butom = ft.Row([buttom_regret, buttom_escoger, buttom_next])
 
+        col = ft.Column(controls=[])
+
     def view_watch_order(e):
         # "data":{
         # "identifier_client": ""
