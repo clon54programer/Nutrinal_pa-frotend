@@ -13,6 +13,7 @@ def view_general_seller(page: ft.Page):
         print()
         page.remove(row_buttom)
         page.remove(row_3)
+        page.remove(row_client)
 
     def view_watch_order(e):
         # "data":{
@@ -23,6 +24,7 @@ def view_general_seller(page: ft.Page):
         # "shipping_destination": ""
         page.remove(row_buttom)
         page.remove(row_3)
+        page.remove(row_client)
 
         text = ft.Text("Pedidos",
                        color=ft.Colors.BLACK, text_align=ft.TextAlign.CENTER, size=40, style=ft.TextAlign.CENTER)
@@ -149,6 +151,7 @@ def view_general_seller(page: ft.Page):
 
         page.remove(row_buttom)
         page.remove(row_3)
+        page.remove(row_client)
 
         text = ft.Text("Crear Cliente",
                        color=ft.Colors.BLACK, text_align=ft.TextAlign.CENTER, size=40, style=ft.TextAlign.CENTER)
@@ -186,8 +189,9 @@ def view_general_seller(page: ft.Page):
                 "http://127.0.0.1:8000/nutrinal_pa/create_client", json=json)
 
             if r.status_code != 200:
-                json = r.json()['data']['details']
-                text_info.value = f"[ERROR] {json}"
+                json_error = r.json()
+                # text_info.value = f"[ERROR] {json}"
+                print(json_error)
             else:
                 text_info.value = "La informacion se mando de forma correcta."
 
@@ -231,6 +235,6 @@ def view_general_seller(page: ft.Page):
 
     page.add(row_3)
     page.add(row_buttom)
-    page.add(buttom_create_client)
+    page.add(row_client)
 
     page.update()
