@@ -178,17 +178,14 @@ def view_general_seller(page: ft.Page):
                 return data
 
             code_product = get_code_product(productos)
-            cant_product = g
+            cant_product = get_cant_product(productos, cants)
 
             data = {
                 "data": {
                     "identifier_client": text_code_client_field.value,
-                    "identifier_seller": text_code_seller_field,
+                    "identifier_seller": text_code_seller_field.value,
                     "code_product": code_product,
-                    "cant_product": {
-                        "code": "123",
-                        "cant": 100
-                    },
+                    "cant_product": cant_product,
                     "shipping_destination": "jajjdjjd"
                 }
             }
@@ -206,7 +203,16 @@ def view_general_seller(page: ft.Page):
 
         col.controls.append(col_select_product)
 
+        def on_click(e):
+            buttom_regression(
+                page, [col, butttom_send, regret], view_general_seller)
+
+        regret = ft.ElevatedButton(
+            text="Regresar a la anterior vista", on_click=on_click)
+
         page.add(col)
+        page.add(butttom_send)
+        page.add(regret)
         page.scroll = ft.ScrollMode.ALWAYS
         page.update()
 
