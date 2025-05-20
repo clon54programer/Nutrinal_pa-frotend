@@ -144,7 +144,10 @@ def view_general_seller(page: ft.Page):
 
         row_butom = ft.Row([buttom_regret, buttom_escoger, buttom_next])
 
-        col = ft.Column(controls=[])
+        col = ft.Column(controls=[text_main, text_code_client, text_code_client_field,
+                        text_code_seller, text_code_seller_field, text_destination, text_destination_field])
+
+        page.add(col)
 
     def view_watch_order(e):
         # "data":{
@@ -347,7 +350,7 @@ def view_general_seller(page: ft.Page):
                                        bgcolor=ft.Colors.AMBER,
                                        width=150,
                                        height=150,
-                                       border_radius=10)
+                                       border_radius=10, on_click=create_order)
 
     buttom_watch_order = ft.Container(
         content=ft.Text("Ver pedidos"), margin=10,
