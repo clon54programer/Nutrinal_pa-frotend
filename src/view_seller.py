@@ -84,16 +84,14 @@ def view_general_seller(page: ft.Page):
                 order_date = data[f"order_{index}"]['order_date']
                 date_update = data[f"order_{index}"]['date_update']
 
-                text_id = ft.Text(f"Id: {id}")
-                text_cant = ft.Text(f"cantidad: {cant_product}"
-                                    )
-                text_status = ft.Text(f"Status: {status}")
-                text_destination = ft.Text(f"Destino: {shipping_destination}")
-                text_client = ft.Text(f"Cliente: {client}")
-                text_seller = ft.Text(f"Vendedor: {seller}")
-                text_order_date = ft.Text(f"Fecha de realicion: {order_date}")
-                text_date_update = ft.Text(
-                    f"Fecha de atualizacion: {date_update}")
+                text_id.value = f"Id: {id}"
+                text_cant.value = f"cantidad: {cant_product}"
+                text_status.value = f"Status: {status}"
+                text_destination.value = f"Destino: {shipping_destination}"
+                text_client.value = f"Cliente: {client}"
+                text_seller.value = f"Vendedor: {seller}"
+                text_order_date.value = f"Fecha de realicion: {order_date}"
+                text_date_update.value = f"Fecha de atualizacion: {date_update}"
 
         page.update()
 
