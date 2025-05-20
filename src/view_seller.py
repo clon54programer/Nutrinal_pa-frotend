@@ -14,6 +14,135 @@ def view_general_seller(page: ft.Page):
         page.remove(row_buttom)
         page.remove(row_3)
         page.remove(row_client)
+        # "data":{
+        # "identifier_client": ""
+        # "identifier_seller": "",
+        # "code_product":"",
+        # "cant_product":{},
+        # "shipping_destination": ""
+
+        text_main = ft.Text("Crear pedidos",
+                            color=ft.Colors.BLACK, text_align=ft.TextAlign.CENTER, size=40, style=ft.TextAlign.CENTER)
+
+        text_code_client = ft.Text("Codigo del cliente")
+        text_code_client_field = ft.TextField(
+            label="Ingrese el codigo del cliente")
+
+        text_code_seller = ft.Text("Codigo del vendedor")
+        text_code_seller_field = ft.TextField(
+            label="Ingrese el codigo del vendedor")
+
+        text_destination = ft.Text("Destino del envio")
+        text_destination_field = ft.TextField(
+            label="Ingrese el destiono del pedido")
+
+        productos = []
+        col_select_product = ft.Column()
+
+        r = requests.get(
+            "http://127.0.0.1:8000/nutrinal_pa/admin/get_product")
+
+        json = r.json()
+
+        data = json.get("data", {})
+
+        items: dict = dict(data.items())
+        index: int = 0
+
+        name = items[f"product_{index}"]["name"]
+        code = items[f"product_{index}"]["code"]
+        price = items[f"product_{index}"]["price"]
+        description = items[f"product_{index}"]["description"]
+
+        json_code = {"code": code}
+        r_2 = requests.post(
+            "http://127.0.0.1:8000/nutrinal_pa/admin/get_cant_product", json=json_code)
+        cant_avaible = r_2.json().get("data", {}).get("cant_product", "No disponible")
+
+        text_product = ft.Text("Producto",
+                               color=ft.Colors.BLACK, text_align=ft.TextAlign.CENTER, size=25, style=ft.TextAlign.CENTER)
+
+        text_index = ft.Text(f"Producto {index}")
+        text_name = ft.Text(f"Name: {name}")
+        text_code = ft.Text(f"Codigo: {code}")
+        text_price = ft.Text(f"Precio: {price}")
+        text_description = ft.Text(f"Descripcion: {description}")
+        text_cant_avaible = ft.Text(f"Cantidad disponible: {cant_avaible}")
+
+        def on_regret(e):
+            nonlocal index
+            if index != 0:
+                index -= 1
+                name = items[f"product_{index}"]["name"]
+                code = items[f"product_{index}"]["code"]
+                price = items[f"product_{index}"]["price"]
+                description = items[f"product_{index}"]["description"]
+
+                json_code = {"code": code}
+                r_2 = requests.post(
+                    "http://127.0.0.1:8000/nutrinal_pa/admin/get_cant_product", json=json_code)
+                cant_avaible = r_2.json().get("data", {}).get("cant_product", "No disponible")
+
+                text_index.value = f"Producto {index}"
+                text_name.value = f"Name: {name}"
+                text_code.value = f"Codigo: {code}"
+                text_price.value = f"Precio: {price}"
+                text_description.value = f"descripcion: {description}"
+                text_cant_avaible.value = f"Cantidad disponible: {cant_avaible}"
+
+            page.update()
+
+        def on_next(e):
+            nonlocal index
+            if index < len(items) - 1:
+                index += 1
+
+                name = items[f"product_{index}"]["name"]
+                code = items[f"product_{index}"]["code"]
+                price = items[f"product_{index}"]["price"]
+                description = items[f"product_{index}"]["description"]
+
+                json_code = {"code": code}
+                r_2 = requests.post(
+                    "http://127.0.0.1:8000/nutrinal_pa/admin/get_cant_product", json=json_code)
+                cant_avaible = r_2.json().get("data", {}).get("cant_product", "No disponible")
+
+                text_index.value = f"Producto {index}"
+                text_name.value = f"Name: {name}"
+                text_code.value = f"Codigo: {code}"
+                text_price.value = f"Precio: {price}"
+                text_description.value = f"descripcion: {description}"
+                text_cant_avaible.value = f"Cantidad disponible: {cant_avaible}"
+
+            page.update()
+
+        def on_click_escoger(e):
+
+            if index not in productos:
+                productos.append(index)
+
+                name = items[f"product_{index}"]["name"]
+                code = items[f"product_{index}"]["code"]
+                price = items[f"product_{index}"]["price"]
+
+                col_select_product.controls.append(ft.Container(content=ft.Column(controls=[ft.Text(f"Producto {index}"),
+                                                                                            ft.Text(
+                                                                                                f"Name: {name}"),
+                                                                                            ft.Text(
+                                                                                                f"Codigo: {code}"),
+                                                                                            ft.Text(
+                                                                                                f"Precio: {price}")
+
+                                                                                            ])))
+
+                col_select_product.update()
+
+        buttom_regret = ft.ElevatedButton(text="Regresar", on_click=on_regret)
+        buttom_escoger = ft.ElevatedButton(
+            text="Escoger", on_click=on_click_escoger)
+        buttom_next = ft.ElevatedButton(text="Siguiente", on_click=on_next)
+
+        row_butom = ft.Row([buttom_regret, buttom_escoger, buttom_next])
 
     def view_watch_order(e):
         # "data":{
