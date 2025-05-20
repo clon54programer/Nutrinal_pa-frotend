@@ -165,7 +165,20 @@ def view_general_seller(page: ft.Page):
 
                 return data
 
+            def get_cant_product(lista: list[int], lista_2: list[int]) -> dict[str, str | int]:
+                data = {}
+                count = 0
+                for value in lista:
+                    data[f"code_{count}"] = {"code": items[f"product_{index}"]["code"],
+                                             "cant_product": lista_2[count]
+                                             }
+
+                    count += 1
+
+                return data
+
             code_product = get_code_product(productos)
+            cant_product = g
 
             data = {
                 "data": {
