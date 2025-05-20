@@ -1,6 +1,7 @@
 import flet as ft
 import requests
 
+
 # Funciones
 # crear vendedores
 # ver vendedores
@@ -552,10 +553,19 @@ def view_general(page: ft.Page) -> None:
 
     row_3 = ft.Row([text], alignment=ft.MainAxisAlignment.CENTER)
 
+    # def on_click(e):
+    #    import main
+    #    buttom_regression(
+    #        page, [row_3, row_2, row, buttom_watch_orders, regret, text], main.main)
+
+    # regret = ft.ElevatedButton(
+    #    text="Regresar a la anterior vista", on_click=on_click)
+
     page.add(row_3)
     page.add(row)
     page.add(row_2)
 
     page.add(buttom_watch_orders)
+    # page.add(regret)
 
     page.update()
