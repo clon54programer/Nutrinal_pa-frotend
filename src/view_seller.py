@@ -1,5 +1,6 @@
 import flet as ft
 import requests
+from view_admin import buttom_regression
 
 
 def view_general_seller(page: ft.Page):
@@ -130,9 +131,17 @@ def view_general_seller(page: ft.Page):
 
         row_butom = ft.Row([buttom_regret, buttom_next])
 
+        def on_click(e):
+            buttom_regression(
+                page, [text, col, row_butom, regret], view_general_seller)
+
+        regret = ft.ElevatedButton(
+            text="Regresar a la anterior vista", on_click=on_click)
+
         page.add(text)
         page.add(col)
         page.add(row_butom)
+        page.add(regret)
 
         page.update()
 
