@@ -1,70 +1,49 @@
 import flet as ft
+from view_admin import view_general
+from view_seller import view_general_seller
 
 
 def main(page: ft.Page):
 
-    text_user = ft.Text("Usuario")
+    text = ft.Text("Paneles",
+                   color=ft.Colors.BLACK, text_align=ft.TextAlign.CENTER, size=40, style=ft.TextAlign.CENTER)
 
-    username_field = ft.TextField(label="Ingrese su usuario")
+    def on_click_1(e):
+        page.remove(row)
+        page.remove(row_2)
 
-    text_password = ft.Text("Contraseña")
+        page.update()
+        view_general(page)
 
-    password_field = ft.TextField(label="Escriba su contraseña", password=True)
+    def on_click_2(e):
+        page.remove(row)
+        page.remove(row_2)
 
-    text_list = ft.Text("¿Que tipo de usuario es?")
-    type_user = []
+        page.update()
+        view_general_seller(page)
 
-    type_user.append(ft.DropdownOption(content=ft.Text(
-        value="Cliente"), key="Cliente"))
+    buttom_view_admin = ft.Container(content=ft.Text("Administrador"), margin=10,
+                                     padding=10,
+                                     alignment=ft.alignment.center,
+                                     bgcolor=ft.Colors.AMBER,
+                                     width=150,
+                                     height=150,
+                                     border_radius=10, on_click=on_click_1)
 
-    type_user.append(ft.DropdownOption(content=ft.Text(
-        value="Administrador"), key="Administrador"))
+    buttom_view_seller = ft.Container(
+        content=ft.Text("Vendedor."), margin=10,
+        padding=10,
+        alignment=ft.alignment.center,
+        bgcolor=ft.Colors.BLUE,
+        width=150,
+        height=150,
+        border_radius=10, on_click=on_click_2)
 
-    type_user.append(ft.DropdownOption(content=ft.Text(
-        value="Vendedor"), key="Vendedor"))
+    row = ft.Row(controls=[text])
+    row_2 = ft.Row(controls=[buttom_view_admin, buttom_view_seller])
 
-    list_type_user = ft.Dropdown(
-        options=type_user)
-
-    def send_info(e) -> None:
-
-        if username_field.value != None and password_field.value != None:
-
-            print("user: ", username_field.value)
-            print("password: ", password_field.value)
-            print("Tipo de usuario: ", list_type_user.value)
-
-            page.remove(text_user)
-            page.remove(username_field)
-
-            page.remove(text_password)
-            page.remove(password_field)
-
-            page.remove(text_list)
-            page.remove(list_type_user)
-
-            page.remove(send_buttom)
-
-            # text = ft.TextField("Se envio la informacion")
-
-            # page.add(text)
-            # page.update()
-
-        else:
-            print("Un campo esta vacio")
-
-    send_buttom = ft.ElevatedButton(text="Enviar", on_click=send_info)
-
-    page.add(text_user)
-    page.add(username_field)
-
-    page.add(text_password)
-    page.add(password_field)
-
-    page.add(text_list)
-    page.add(list_type_user)
-
-    page.add(send_buttom)
+    page.add(row)
+    page.add(row_2)
 
 
 ft.app(main)
