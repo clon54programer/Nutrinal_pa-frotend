@@ -546,7 +546,7 @@ def view_general(page: ft.Page) -> None:
                                        bgcolor=ft.Colors.YELLOW,
                                        width=150,
                                        height=150,
-                                       border_radius=10)
+                                       border_radius=10, on_click=view_watch_orders)
 
     row = ft.Row([buttom_create_seller, buttom_watch_seller])
     row_2 = ft.Row([buttom_create_production, buttom_watch_production])
