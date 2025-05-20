@@ -294,7 +294,7 @@ def view_general(page: ft.Page) -> None:
         json_code = {"code": code}
         r_2 = requests.post(
             "http://127.0.0.1:8000/nutrinal_pa/admin/get_cant_product", json=json_code)
-        cant_avaible = r_2['data']['cant_product']
+        cant_avaible = r_2.json().get("data", {}).get("cant_product", "No disponible")
 
         text_index = ft.Text(f"Producto {index}")
         text_name = ft.Text(f"Name: {name}")
@@ -316,7 +316,7 @@ def view_general(page: ft.Page) -> None:
                 json_code = {"code": code}
                 r_2 = requests.post(
                     "http://127.0.0.1:8000/nutrinal_pa/admin/get_cant_product", json=json_code)
-                cant_avaible = r_2['data']['cant_product']
+                cant_avaible = r_2.json().get("data", {}).get("cant_product", "No disponible")
 
                 text_index.value = f"Producto {index}"
                 text_name.value = f"Name: {name}"
@@ -329,7 +329,7 @@ def view_general(page: ft.Page) -> None:
 
         def on_next(e):
             nonlocal index
-            if index <= len(items) - 1:
+            if index < len(items) - 1:
                 index += 1
 
                 name = items[f"product_{index}"]["name"]
@@ -340,14 +340,14 @@ def view_general(page: ft.Page) -> None:
                 json_code = {"code": code}
                 r_2 = requests.post(
                     "http://127.0.0.1:8000/nutrinal_pa/admin/get_cant_product", json=json_code)
-                cant_avaible = r_2['data']['cant_product']
+                cant_avaible = r_2.json().get("data", {}).get("cant_product", "No disponible")
 
                 text_index.value = f"Producto {index}"
                 text_name.value = f"Name: {name}"
                 text_code.value = f"Codigo: {code}"
                 text_price.value = f"Precio: {price}"
                 text_description.value = f"descripcion: {description}"
-                text_cant_avaible = f"Cantidad disponible: {cant_avaible}"
+                text_cant_avaible.value = f"Cantidad disponible: {cant_avaible}"
 
             page.update()
 
