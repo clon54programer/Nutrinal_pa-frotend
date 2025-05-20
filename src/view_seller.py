@@ -198,9 +198,17 @@ def view_general_seller(page: ft.Page):
         butoo_send = ft.ElevatedButton(
             "Enviar informacion", on_click=on_click_send_info)
 
+        def on_click(e):
+            buttom_regression(
+                page, [col, text_info, regret, butoo_send], view_general_seller)
+
+        regret = ft.ElevatedButton(
+            text="Regresar a la anterior vista", on_click=on_click)
+
         page.add(col)
         page.add(text_info)
         page.add(butoo_send)
+        page.add(regret)
 
     buttom_create_order = ft.Container(content=ft.Text("Hacer un pedido"), margin=10,
                                        padding=10,
