@@ -383,8 +383,10 @@ def view_general(page: ft.Page) -> None:
         page.remove(row_3)
         page.remove(buttom_watch_orders)
 
-        r = requests.get(
-            "http://127.0.0.1:8000/nutrinal_pa/admin/get_orders")
+        text = ft.Text("Pedidos",
+                       color=ft.Colors.BLACK, text_align=ft.TextAlign.CENTER, size=40, style=ft.TextAlign.CENTER)
+
+        r = requests.get("http://127.0.0.1:8000/nutrinal_pa/admin/get_orders")
 
         json = r.json()
 
@@ -393,10 +395,114 @@ def view_general(page: ft.Page) -> None:
         items: dict = dict(data.items())
         index: int = 0
 
-        name = items[f"product_{index}"]["name"]
-        code = items[f"product_{index}"]["code"]
-        price = items[f"product_{index}"]["price"]
-        description = items[f"product_{index}"]["description"]
+        """
+        "id": "492e9566-7848-4c7e-bad6-90be4b24dd79",
+        "cant_product": 0,
+        "status": "pending",
+        "shipping_destination": "",
+        "seller": "Carlos",
+        "client": "Juan Pérez",
+        "product": [],
+        "order_date": "2025-05-06T03:52:35.211Z",
+        "date_update": "2025-05-06T03:52:35.211Z"
+        }"""
+
+        id = data[f"order_{index}"]['id']
+        cant_product = data[f"order_{index}"]['cant_product']
+        status = data[f"order_{index}"]['status']
+        shipping_destination = data[f"order_{index}"]['shipping_destination']
+        seller = data[f"order_{index}"]['seller']
+        client = data[f"order_{index}"]['client']
+        order_date = data[f"order_{index}"]['order_date']
+        date_update = data[f"order_{index}"]['date_update']
+
+        text_index = ft.Text(f"Pedido_{index}")
+        text_id = ft.Text(f"Id: {id}")
+        text_cant = ft.Text(f"cantidad: {cant_product}"
+                            )
+        text_status = ft.Text(f"Status: {status}")
+        text_destination = ft.Text(f"Destino: {shipping_destination}")
+        text_client = ft.Text(f"Cliente: {client}")
+        text_seller = ft.Text(f"Vendedor: {seller}")
+        text_order_date = ft.Text(f"Fecha de realicion: {order_date}")
+        text_date_update = ft.Text(f"Fecha de atualizacion: {date_update}")
+
+        col = ft.Column([text_index, text_id, text_cant, text_status, text_destination,
+                        text_client, text_seller, text_order_date, text_date_update])
+
+        def on_regret(e):
+            nonlocal index
+
+            if index != 0:
+
+                index -= 1
+
+                id = data[f"order_{index}"]['id']
+                cant_product = data[f"order_{index}"]['cant_product']
+                status = data[f"order_{index}"]['status']
+                shipping_destination = data[f"order_{index}"]['shipping_destination']
+                seller = data[f"order_{index}"]['seller']
+                client = data[f"order_{index}"]['client']
+                order_date = data[f"order_{index}"]['order_date']
+                date_update = data[f"order_{index}"]['date_update']
+
+                text_index.value = f"Pedido_{index}"
+                text_id.value = f"Id: {id}"
+                text_cant.value = f"cantidad: {cant_product}"
+                text_status.value = f"Status: {status}"
+                text_destination.value = f"Destino: {shipping_destination}"
+                text_client.value = f"Cliente: {client}"
+                text_seller.value = f"Vendedor: {seller}"
+                text_order_date.value = f"Fecha de realicion: {order_date}"
+                text_date_update.value = f"Fecha de atualizacion: {date_update}"
+
+            page.update()
+
+        def on_next(e):
+            nonlocal index
+            if index < len(items) - 1:
+                index += 1
+
+                id = data[f"order_{index}"]['id']
+                cant_product = data[f"order_{index}"]['cant_product']
+                status = data[f"order_{index}"]['status']
+                shipping_destination = data[f"order_{index}"]['shipping_destination']
+                seller = data[f"order_{index}"]['seller']
+                client = data[f"order_{index}"]['client']
+                order_date = data[f"order_{index}"]['order_date']
+                date_update = data[f"order_{index}"]['date_update']
+
+                text_index.value = f"Pedido_{index}"
+                text_id.value = f"Id: {id}"
+                text_cant.value = f"cantidad: {cant_product}"
+
+                text_status.value = f"Status: {status}"
+                text_destination.value = f"Destino: {shipping_destination}"
+                text_client.value = f"Cliente: {client}"
+                text_seller.value = f"Vendedor: {seller}"
+                text_order_date.value = f"Fecha de realicion: {order_date}"
+                text_date_update.value = f"Fecha de atualizacion: {date_update}"
+
+            page.update()
+
+        buttom_regret = ft.ElevatedButton(text="Regresar", on_click=on_regret)
+        buttom_next = ft.ElevatedButton(text="Siguiente", on_click=on_next)
+
+        row_butom = ft.Row([buttom_regret, buttom_next])
+
+        def on_click(e):
+            buttom_regression(
+                page, [text, col, row_butom, regret], view_general)
+
+        regret = ft.ElevatedButton(
+            text="Regresar a la anterior vista", on_click=on_click)
+
+        page.add(text)
+        page.add(col)
+        page.add(row_butom)
+        page.add(regret)
+
+        page.update()
 
     buttom_watch_seller = ft.Container(content=ft.Text("Ver vendedores"), margin=10,
                                        padding=10,
