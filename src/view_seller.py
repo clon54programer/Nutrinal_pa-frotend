@@ -37,7 +37,7 @@ def view_general_seller(page: ft.Page):
             label="Ingrese el destiono del pedido")
 
         productos = []
-        col_select_product = ft.Column()
+        col_select_product = ft.Column(scroll=ft.ScrollMode.AUTO)
 
         r = requests.get(
             "http://127.0.0.1:8000/nutrinal_pa/admin/get_product")
@@ -149,12 +149,48 @@ def view_general_seller(page: ft.Page):
 
         col = ft.Column(controls=[text_main, text_code_client, text_code_client_field,
                         text_code_seller, text_code_seller_field, text_destination, text_destination_field, text_product,
-                        text_index, text_name, text_code, text_price, text_description])
+                        text_index, text_name, text_code, text_price, text_description],
+                        scroll=ft.ScrollMode.ALWAYS)
+
+        def on_click_send_info(e):
+
+            def get_code_product(lista: list[int]) -> list[str]:
+                data = []
+
+                for value in lista:
+                    data.append(items[f"product_{index}"]["code"])
+
+                return data
+
+            code_product = get_code_product(productos)
+
+            data = {
+                "data": {
+                    "identifier_client": text_code_client_field.value,
+                    "identifier_seller": text_code_seller_field,
+                    "code_product": code_product,
+                    "cant_product": {
+                        "code": "123",
+                        "cant": 100
+                    },
+                    "shipping_destination": "jajjdjjd"
+                }
+            }
+
+            url = f"http://127.0.0.1:8000/nutrinal_pa/make_order"
+
+            r = requests.post(url=url, json=data)
+
+        butttom_send = ft.ElevatedButton(
+            "Enviar informacion", on_click=on_click_send_info)
+
+        col.controls.append(row_butom)
+        col.controls.append(text_elegidos)
+        col.controls.append(col_select_product)
 
         page.add(col)
-        page.add(row_butom)
-        page.add(text_elegidos)
-        page.add(col_select_product)
+        page.scroll = ft.ScrollMode.ALWAYS
+        page.update()
 
     def view_watch_order(e):
         # "data":{
