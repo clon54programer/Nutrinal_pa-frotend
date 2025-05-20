@@ -72,24 +72,28 @@ def view_general_seller(page: ft.Page):
         def on_regret(e):
             nonlocal index
             if index != 0:
-                id = data[f"order_{index}"]['id']
-        cant_product = data[f"order_{index}"]['cant_product']
-        status = data[f"order_{index}"]['status']
-        shipping_destination = data[f"order_{index}"]['shipping_destination']
-        seller = data[f"order_{index}"]['seller']
-        client = data[f"order_{index}"]['client']
-        order_date = data[f"order_{index}"]['order_date']
-        date_update = data[f"order_{index}"]['date_update']
 
-        text_id = ft.Text(f"Id: {id}")
-        text_cant = ft.Text(f"cantidad: {cant_product}"
-                            )
-        text_status = ft.Text(f"Status: {status}")
-        text_destination = ft.Text(f"Destino: {shipping_destination}")
-        text_client = ft.Text(f"Cliente: {client}")
-        text_seller = ft.Text(f"Vendedor: {seller}")
-        text_order_date = ft.Text(f"Fecha de realicion: {order_date}")
-        text_date_update = ft.Text(f"Fecha de atualizacion: {date_update}")
+                index -= 1
+
+                id = data[f"order_{index}"]['id']
+                cant_product = data[f"order_{index}"]['cant_product']
+                status = data[f"order_{index}"]['status']
+                shipping_destination = data[f"order_{index}"]['shipping_destination']
+                seller = data[f"order_{index}"]['seller']
+                client = data[f"order_{index}"]['client']
+                order_date = data[f"order_{index}"]['order_date']
+                date_update = data[f"order_{index}"]['date_update']
+
+                text_id = ft.Text(f"Id: {id}")
+                text_cant = ft.Text(f"cantidad: {cant_product}"
+                                    )
+                text_status = ft.Text(f"Status: {status}")
+                text_destination = ft.Text(f"Destino: {shipping_destination}")
+                text_client = ft.Text(f"Cliente: {client}")
+                text_seller = ft.Text(f"Vendedor: {seller}")
+                text_order_date = ft.Text(f"Fecha de realicion: {order_date}")
+                text_date_update = ft.Text(
+                    f"Fecha de atualizacion: {date_update}")
 
         page.update()
 
@@ -98,22 +102,24 @@ def view_general_seller(page: ft.Page):
             if index < len(items) - 1:
                 index += 1
 
-                name = items[f"product_{index}"]["name"]
-                code = items[f"product_{index}"]["code"]
-                price = items[f"product_{index}"]["price"]
-                description = items[f"product_{index}"]["description"]
+                id = data[f"order_{index}"]['id']
+                cant_product = data[f"order_{index}"]['cant_product']
+                status = data[f"order_{index}"]['status']
+                shipping_destination = data[f"order_{index}"]['shipping_destination']
+                seller = data[f"order_{index}"]['seller']
+                client = data[f"order_{index}"]['client']
+                order_date = data[f"order_{index}"]['order_date']
+                date_update = data[f"order_{index}"]['date_update']
 
-                json_code = {"code": code}
-                r_2 = requests.post(
-                    "http://127.0.0.1:8000/nutrinal_pa/admin/get_cant_product", json=json_code)
-                cant_avaible = r_2.json().get("data", {}).get("cant_product", "No disponible")
+                text_id.value = f"Id: {id}"
+                text_cant.value = f"cantidad: {cant_product}"
 
-                text_index.value = f"Producto {index}"
-                text_name.value = f"Name: {name}"
-                text_code.value = f"Codigo: {code}"
-                text_price.value = f"Precio: {price}"
-                text_description.value = f"descripcion: {description}"
-                text_cant_avaible.value = f"Cantidad disponible: {cant_avaible}"
+                text_status.value = f"Status: {status}"
+                text_destination.value = f"Destino: {shipping_destination}"
+                text_client.value = f"Cliente: {client}"
+                text_seller.value = f"Vendedor: {seller}"
+                text_order_date.value = f"Fecha de realicion: {order_date}"
+                text_date_update.value = f"Fecha de atualizacion: {date_update}"
 
             page.update()
 
