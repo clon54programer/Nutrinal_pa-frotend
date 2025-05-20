@@ -34,9 +34,10 @@ def view_general_seller(page: ft.Page):
 
         text_destination = ft.Text("Destino del envio")
         text_destination_field = ft.TextField(
-            label="Ingrese el destiono del pedido")
+            label="Ingrese el destino del pedido")
 
         productos = []
+        cants = []
         col_select_product = ft.Column(scroll=ft.ScrollMode.AUTO)
 
         r = requests.get(
@@ -115,11 +116,13 @@ def view_general_seller(page: ft.Page):
                 text_cant_avaible.value = f"Cantidad disponible: {cant_avaible}"
 
             page.update()
+        text_cant = ft.TextField(label="Ingrese la cantidad del producto")
 
         def on_click_escoger(e):
 
-            if index not in productos:
+            if index not in productos and text_cant != "":
                 productos.append(index)
+                cants.append(text_cant)
 
                 name = items[f"product_{index}"]["name"]
                 code = items[f"product_{index}"]["code"]
@@ -186,6 +189,7 @@ def view_general_seller(page: ft.Page):
 
         col.controls.append(row_butom)
         col.controls.append(text_elegidos)
+        col.controls.append(text_cant)
         col.controls.append(col_select_product)
 
         page.add(col)
