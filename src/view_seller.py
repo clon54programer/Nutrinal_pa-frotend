@@ -22,3 +22,12 @@ def view_general_seller(page: ft.Page):
         width=150,
         height=150,
         border_radius=10)
+
+    row_buttom = ft.Row([buttom_create_order, buttom_watch_order])
+
+    row_3 = ft.Row([text], alignment=ft.MainAxisAlignment.CENTER)
+
+    page.add(row_3)
+    page.add(row_buttom)
+
+    page.update()
