@@ -188,8 +188,9 @@ def view_general_seller(page: ft.Page):
             "Enviar informacion", on_click=on_click_send_info)
 
         col.controls.append(row_butom)
-        col.controls.append(text_elegidos)
         col.controls.append(text_cant)
+        col.controls.append(text_elegidos)
+
         col.controls.append(col_select_product)
 
         page.add(col)
