@@ -56,6 +56,7 @@ def view_general_seller(page: ft.Page):
         order_date = data[f"order_{index}"]['order_date']
         date_update = data[f"order_{index}"]['date_update']
 
+        text_index = ft.Text(f"Pedido_{index}")
         text_id = ft.Text(f"Id: {id}")
         text_cant = ft.Text(f"cantidad: {cant_product}"
                             )
@@ -66,11 +67,12 @@ def view_general_seller(page: ft.Page):
         text_order_date = ft.Text(f"Fecha de realicion: {order_date}")
         text_date_update = ft.Text(f"Fecha de atualizacion: {date_update}")
 
-        col = ft.Column([text_id, text_cant, text_status, text_destination,
+        col = ft.Column([text_index, text_id, text_cant, text_status, text_destination,
                         text_client, text_seller, text_order_date, text_date_update])
 
         def on_regret(e):
             nonlocal index
+
             if index != 0:
 
                 index -= 1
@@ -84,6 +86,7 @@ def view_general_seller(page: ft.Page):
                 order_date = data[f"order_{index}"]['order_date']
                 date_update = data[f"order_{index}"]['date_update']
 
+                text_index.value = f"Pedido_{index}"
                 text_id.value = f"Id: {id}"
                 text_cant.value = f"cantidad: {cant_product}"
                 text_status.value = f"Status: {status}"
@@ -93,7 +96,7 @@ def view_general_seller(page: ft.Page):
                 text_order_date.value = f"Fecha de realicion: {order_date}"
                 text_date_update.value = f"Fecha de atualizacion: {date_update}"
 
-        page.update()
+            page.update()
 
         def on_next(e):
             nonlocal index
@@ -109,6 +112,7 @@ def view_general_seller(page: ft.Page):
                 order_date = data[f"order_{index}"]['order_date']
                 date_update = data[f"order_{index}"]['date_update']
 
+                text_index.value = f"Pedido_{index}"
                 text_id.value = f"Id: {id}"
                 text_cant.value = f"cantidad: {cant_product}"
 
@@ -126,6 +130,12 @@ def view_general_seller(page: ft.Page):
 
         row_butom = ft.Row([buttom_regret, buttom_next])
 
+        page.add(text)
+        page.add(col)
+        page.add(row_butom)
+
+        page.update()
+
     buttom_create_order = ft.Container(content=ft.Text("Hacer un pedido"), margin=10,
                                        padding=10,
                                        alignment=ft.alignment.center,
@@ -141,7 +151,7 @@ def view_general_seller(page: ft.Page):
         bgcolor=ft.Colors.BLUE,
         width=150,
         height=150,
-        border_radius=10)
+        border_radius=10, on_click=view_watch_order)
 
     row_buttom = ft.Row([buttom_create_order, buttom_watch_order])
 
