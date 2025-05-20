@@ -142,12 +142,19 @@ def view_general_seller(page: ft.Page):
             text="Escoger", on_click=on_click_escoger)
         buttom_next = ft.ElevatedButton(text="Siguiente", on_click=on_next)
 
+        text_elegidos = ft.Text("Elegidos",
+                                color=ft.Colors.BLACK, text_align=ft.TextAlign.CENTER, size=25, style=ft.TextAlign.CENTER)
+
         row_butom = ft.Row([buttom_regret, buttom_escoger, buttom_next])
 
         col = ft.Column(controls=[text_main, text_code_client, text_code_client_field,
-                        text_code_seller, text_code_seller_field, text_destination, text_destination_field])
+                        text_code_seller, text_code_seller_field, text_destination, text_destination_field, text_product,
+                        text_index, text_name, text_code, text_price, text_description])
 
         page.add(col)
+        page.add(row_butom)
+        page.add(text_elegidos)
+        page.add(col_select_product)
 
     def view_watch_order(e):
         # "data":{
